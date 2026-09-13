@@ -105,6 +105,13 @@ export default defineConfig(() => {
     server: {
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      proxy: {
+        '/api/exercisedb': {
+          target: 'https://oss.exercisedb.dev',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/exercisedb/, ''),
+        },
+      },
     },
   };
 });

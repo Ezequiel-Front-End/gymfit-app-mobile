@@ -11,6 +11,13 @@ import { WelcomeScreen } from './screens/WelcomeScreen';
 import { LoginScreen } from './screens/LoginScreen';
 import { SignupScreen } from './screens/SignupScreen';
 import { HomeScreen } from './screens/HomeScreen';
+import { ActivitiesScreen } from './screens/ActivitiesScreen';
+import { WorkoutsScreen } from './screens/WorkoutsScreen';
+import { WorkoutDetailsScreen } from './screens/WorkoutDetailsScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { NewWorkoutScreen } from './screens/NewWorkoutScreen';
+import { AddExercisesScreen } from './screens/AddExercisesScreen';
+import { BottomNavigation } from './components/BottomNavigation';
 
 const SCREEN_STEPS: Record<ScreenId, number> = {
   splash: 0,
@@ -18,6 +25,12 @@ const SCREEN_STEPS: Record<ScreenId, number> = {
   login: 2,
   signup: 3,
   home: 4,
+  atividades: 5,
+  treinos: 6,
+  treino_detalhes: 7,
+  novo_treino: 8,
+  adicionar_exercicios: 9,
+  perfil: 10,
 };
 
 export default function App() {
@@ -67,6 +80,25 @@ export default function App() {
     navigateTo('welcome', -1);
   };
 
+  const handleNavigateTab = (tab: import('./types').TabId) => {
+    switch (tab) {
+      case 'inicio':
+        navigateTo('home', -1);
+        break;
+      case 'atividades':
+        navigateTo('atividades');
+        break;
+      case 'treino':
+        navigateTo('treinos');
+        break;
+      case 'perfil':
+        navigateTo('perfil');
+        break;
+      default:
+        break;
+    }
+  };
+
   // Fluid iOS / Android native screen slide transitions
   const slideVariants = {
     enter: (dir: number) => ({
@@ -103,7 +135,7 @@ export default function App() {
   return (
     <div className="w-full min-h-screen bg-[#060608] text-white flex items-center justify-center relative overflow-hidden font-sans no-scrollbar">
       {/* Viewport: Centered and responsive up to max-w-md on desktop, full width on mobile */}
-      <main className="w-full max-w-md h-screen min-h-screen flex flex-col justify-between overflow-hidden relative shadow-2xl no-scrollbar bg-black">
+      <main className="w-full max-w-md h-screen min-h-screen flex flex-col justify-between overflow-hidden relative shadow-2xl no-scrollbar bg-[var(--color-fit-bg)]">
         <div className="relative w-full h-full overflow-hidden no-scrollbar flex-1 flex flex-col">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             {currentScreen === 'splash' && (
@@ -183,10 +215,135 @@ export default function App() {
                 <HomeScreen
                   user={user}
                   onLogout={handleLogout}
+                  onNavigateTab={handleNavigateTab}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'atividades' && (
+              <motion.div
+                key="atividades"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full overflow-y-auto no-scrollbar"
+              >
+                <ActivitiesScreen
+                  onBack={() => navigateTo('home', -1)}
+                  onNavigateTab={handleNavigateTab}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'treinos' && (
+              <motion.div
+                key="treinos"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full overflow-y-auto no-scrollbar"
+              >
+                <WorkoutsScreen
+                  onBack={() => navigateTo('home', -1)}
+                  onNavigateTab={handleNavigateTab}
+                  onSelectWorkout={(id) => navigateTo('treino_detalhes', 1)}
+                  onNewWorkout={() => navigateTo('novo_treino', 1)}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'treino_detalhes' && (
+              <motion.div
+                key="treino_detalhes"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full overflow-y-auto no-scrollbar"
+              >
+                <WorkoutDetailsScreen
+                  onBack={() => navigateTo('treinos', -1)}
+                  onNavigateTab={handleNavigateTab}
+                />
+              </motion.div>
+            )}
+            {currentScreen === 'perfil' && (
+              <motion.div
+                key="perfil"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full overflow-y-auto no-scrollbar"
+              >
+                <ProfileScreen
+                  user={user}
+                  onBack={() => navigateTo('home', -1)}
+                  onNavigateTab={handleNavigateTab}
+                  onLogout={handleLogout}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'novo_treino' && (
+              <motion.div
+                key="novo_treino"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <NewWorkoutScreen
+                  onClose={() => navigateTo('treinos', -1)}
+                  onAddExercises={() => navigateTo('adicionar_exercicios', 1)}
+                  onFinish={() => navigateTo('treinos', -1)}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'adicionar_exercicios' && (
+              <motion.div
+                key="adicionar_exercicios"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <AddExercisesScreen
+                  onClose={() => navigateTo('novo_treino', -1)}
+                  onAddSelected={(exercises) => {
+                    // Logic to handle added exercises would go here
+                    navigateTo('novo_treino', -1);
+                  }}
                 />
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Global Bottom Navigation */}
+          {['home', 'atividades', 'treino_detalhes', 'perfil'].includes(currentScreen) && (
+            <div className="absolute bottom-0 left-0 right-0 z-50">
+              <BottomNavigation
+                activeTab={
+                  currentScreen === 'home' ? 'inicio' :
+                  currentScreen === 'atividades' ? 'atividades' :
+                  currentScreen === 'treino_detalhes' ? 'treino' :
+                  currentScreen === 'perfil' ? 'perfil' : 'inicio'
+                }
+                onTabChange={handleNavigateTab}
+              />
+            </div>
+          )}
         </div>
       </main>
     </div>

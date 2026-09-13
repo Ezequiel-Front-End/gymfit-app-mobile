@@ -1,0 +1,124 @@
+import React, { useState, useEffect } from 'react';
+import { X, Search, SlidersHorizontal, Plus, Bookmark, Dumbbell, UserRound, UsersRound, Shirt, List } from 'lucide-react';
+import { Exercise, fetchExercises } from '../api/exercises';
+
+interface AddExercisesScreenProps {
+  onClose: () => void;
+  onAddSelected: (exercises: Exercise[]) => void;
+}
+
+export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose, onAddSelected }) => {
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState<string>('Todos');
+  
+  const categories = ['Todos', 'Peito', 'Costas', 'Ombros', 'Bíceps/Tríceps'];
+  
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await fetchExercises();
+      setExercises(data);
+      setLoading(false);
+    };
+    loadData();
+  }, []);
+
+  const filteredExercises = exercises.filter(ex => {
+    if (activeCategory === 'Todos') return true;
+    return ex.targetMuscle === activeCategory;
+  });
+
+  return (
+    <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-black text-white flex flex-col overflow-hidden select-none z-50">
+      {/* Header */}
+      <div className="px-[22px] pt-12 pb-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <button onClick={onClose} className="p-1 -ml-1 rounded-full hover:bg-[#111] transition-colors">
+            <X className="w-[22px] h-[22px] text-white" />
+          </button>
+          <h1 className="font-sans font-extrabold text-[17px]">Adicionar exercícios</h1>
+        </div>
+        <div className="flex items-center gap-[18px]">
+          <Search className="w-[22px] h-[22px] text-white" />
+          <SlidersHorizontal className="w-[24px] h-[24px] text-white" />
+          <Plus className="w-[22px] h-[22px] text-white" />
+        </div>
+      </div>
+
+      {/* Categories Horizontal Scroll */}
+      <div className="px-[22px] mt-2 flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
+        <Bookmark className="w-[20px] h-[20px] text-white flex-shrink-0 mr-2" />
+        
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-4 py-2 rounded-[12px] font-sans font-bold text-[13px] whitespace-nowrap transition-colors flex-shrink-0 ${
+              activeCategory === cat
+                ? 'bg-[var(--color-fit-green)] text-black'
+                : 'bg-[#18181B] text-white hover:bg-[#27272A]'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* List Header */}
+      <div className="px-[22px] mt-4 flex items-center justify-between">
+        <h2 className="font-sans font-extrabold text-[14px] text-white">
+          {activeCategory === 'Todos' ? 'Todos os exercícios' : `Exercícios para ${activeCategory}`}
+        </h2>
+        <List className="w-[20px] h-[20px] text-[#A1A1AA]" />
+      </div>
+
+      {/* Exercises Grid */}
+      <div className="flex-1 px-[22px] mt-4 overflow-y-auto no-scrollbar pb-8">
+        {loading ? (
+          <div className="w-full flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-4 border-[#2A2A2A] border-t-[var(--color-fit-green)] rounded-full animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-[14px]">
+            {filteredExercises.map((exercise) => (
+              <div
+                key={exercise.id}
+                className="w-full aspect-[168/222] bg-[#262428] rounded-[10px] overflow-hidden flex flex-col relative"
+              >
+                {/* Top Icons */}
+                <div className="absolute top-0 w-full px-3.5 py-3.5 flex justify-between z-10 pointer-events-none">
+                  <button className="pointer-events-auto">
+                    <Bookmark className="w-[18px] h-[18px] text-[#B8B8BE] stroke-[2]" />
+                  </button>
+                  <button className="pointer-events-auto text-[#B8B8BE] font-sans font-bold text-[16px] leading-none">
+                    ?
+                  </button>
+                </div>
+
+                {/* Image container */}
+                <div className="w-full flex-1 bg-[#262428] relative flex items-center justify-center p-4">
+                  <img
+                    src={exercise.gifUrl}
+                    alt={exercise.name}
+                    className="w-[90%] h-[90%] object-contain mix-blend-screen opacity-100 rounded-md filter invert hue-rotate-180"
+                  />
+                </div>
+
+                {/* Info Bar */}
+                <div className="w-full h-auto min-h-[64px] bg-[#302E33] px-3.5 py-3 flex flex-col justify-center">
+                  <span className="font-sans font-extrabold text-[14px] leading-tight text-white line-clamp-2">
+                    {exercise.name}
+                  </span>
+                  <span className="font-sans font-semibold text-[11.5px] text-[#B8B8BE] capitalize mt-1">
+                    {exercise.targetMuscle}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

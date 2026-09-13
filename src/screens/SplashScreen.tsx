@@ -50,46 +50,22 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         transition={{ delay: 0.3, duration: 0.6 }}
         className="flex flex-col items-center justify-center gap-4 pb-6 sm:pb-8"
       >
-        {/* Custom 12-dot circular loader with rotating lime accent */}
-        <div className="relative w-8 h-8 flex items-center justify-center">
-          {dots.map((_, index) => {
-            const angle = (index * 360) / 12;
-            const rad = (angle * Math.PI) / 180;
-            const radius = 12; // radius in px
-            const x = Math.sin(rad) * radius;
-            const y = -Math.cos(rad) * radius;
-
-            return (
-              <motion.div
-                key={index}
-                className="absolute w-1.5 h-1.5 rounded-full"
-                style={{
-                  transform: `translate(${x}px, ${y}px)`,
-                }}
-                animate={{
-                  backgroundColor: [
-                    '#3f3f46',
-                    '#71717a',
-                    '#D4FF00',
-                    '#a1a1aa',
-                    '#3f3f46',
-                  ],
-                  scale: [0.85, 1, 1.35, 1, 0.85],
-                  opacity: [0.35, 0.6, 1, 0.5, 0.35],
-                }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Infinity,
-                  delay: (index * 1.2) / 12,
-                  ease: 'easeInOut',
-                }}
-              />
-            );
-          })}
+        {/* Custom 8-dot circular loader from user CSS */}
+        <div className="relative w-[60px] h-[60px] flex items-center justify-center">
+          <div className="circle-spinner">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
         </div>
 
         {/* Status Text */}
-        <span className="text-[13px] text-zinc-400 font-medium tracking-wide">
+        <span className="text-[14px] text-[#a1a1aa] font-bold tracking-wide mt-2">
           Preparando sua evolução...
         </span>
       </motion.div>

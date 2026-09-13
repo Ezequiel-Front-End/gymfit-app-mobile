@@ -56,15 +56,15 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="mb-6"
         >
-          <h2 className="font-display font-black italic text-4xl uppercase text-white tracking-tight leading-none">
+          <h2 className="font-sans font-black italic text-4xl uppercase text-white tracking-tight leading-none">
             Entrar
           </h2>
           <div className="flex items-center gap-1.5 mt-2.5">
-            <span className="text-zinc-400 text-sm">Novo por aqui?</span>
+            <span className="text-[var(--color-fit-muted)] text-sm">Novo por aqui?</span>
             <button
               type="button"
               onClick={onGoToSignup}
-              className="text-[#D4FF00] text-sm font-bold hover:underline cursor-pointer"
+              className="text-[var(--color-fit-green)] text-sm font-bold hover:underline cursor-pointer"
             >
               Criar conta
             </button>
@@ -74,33 +74,33 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
         {/* Form Inputs */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
           {/* Email Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3.5 transition">
-            <Mail className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3.5 transition">
+            <Mail className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="E-mail"
               autoComplete="email"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
           </div>
 
           {/* Password Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3.5 transition">
-            <Lock className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3.5 transition">
+            <Lock className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Senha"
               autoComplete="current-password"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="p-1 text-zinc-400 hover:text-zinc-200 transition shrink-0 cursor-pointer"
+              className="p-1 text-[var(--color-fit-muted)] hover:text-zinc-200 transition shrink-0 cursor-pointer"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -122,7 +122,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             type="submit"
             disabled={isLoading}
             whileTap={{ scale: 0.98 }}
-            className="mt-3 w-full h-[52px] rounded-full bg-[#D4FF00] hover:bg-[#ddff22] text-black font-black italic text-base uppercase tracking-wide flex items-center justify-center transition shadow-lg cursor-pointer"
+            className="mt-3 w-full h-[52px] rounded-full bg-[var(--color-fit-green)] hover:bg-[#ddff22] text-black font-black italic text-base uppercase tracking-wide flex items-center justify-center transition shadow-lg cursor-pointer"
           >
             {isLoading ? 'Entrando...' : 'Entrar'}
           </motion.button>
@@ -130,7 +130,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           {/* Divider "ou" */}
           <div className="flex items-center my-2.5">
             <div className="flex-1 h-[1px] bg-zinc-850" />
-            <span className="px-3 text-xs text-zinc-500 font-medium lowercase">
+            <span className="px-3 text-xs text-[var(--color-fit-muted)] font-medium lowercase">
               ou
             </span>
             <div className="flex-1 h-[1px] bg-zinc-850" />

@@ -67,15 +67,15 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="mb-5"
         >
-          <h2 className="font-display font-black italic text-4xl uppercase text-white tracking-tight leading-none">
+          <h2 className="font-sans font-black italic text-4xl uppercase text-white tracking-tight leading-none">
             Criar conta
           </h2>
           <div className="flex items-center gap-1.5 mt-2.5">
-            <span className="text-zinc-400 text-sm">Já tem uma conta?</span>
+            <span className="text-[var(--color-fit-muted)] text-sm">Já tem uma conta?</span>
             <button
               type="button"
               onClick={onGoToLogin}
-              className="text-[#D4FF00] text-sm font-bold hover:underline cursor-pointer"
+              className="text-[var(--color-fit-green)] text-sm font-bold hover:underline cursor-pointer"
             >
               Entrar
             </button>
@@ -85,46 +85,46 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
         {/* Form Inputs */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           {/* Name Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3 transition">
-            <User className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3 transition">
+            <User className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Nome completo"
               autoComplete="name"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
           </div>
 
           {/* Email Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3 transition">
-            <Mail className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3 transition">
+            <Mail className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="E-mail"
               autoComplete="email"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
           </div>
 
           {/* Password Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3 transition">
-            <Lock className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3 transition">
+            <Lock className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Senha"
               autoComplete="new-password"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="p-1 text-zinc-400 hover:text-zinc-200 transition shrink-0 cursor-pointer"
+              className="p-1 text-[var(--color-fit-muted)] hover:text-zinc-200 transition shrink-0 cursor-pointer"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -135,20 +135,20 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
           </div>
 
           {/* Confirm Password Input */}
-          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[#D4FF00] rounded-2xl px-4 py-3 transition">
-            <Lock className="w-5 h-5 text-zinc-500 shrink-0" />
+          <div className="flex items-center gap-3 bg-[#111114] border border-zinc-800/90 focus-within:border-[var(--color-fit-green)] rounded-2xl px-4 py-3 transition">
+            <Lock className="w-5 h-5 text-[var(--color-fit-muted)] shrink-0" />
             <input
               type={showConfirmPassword ? 'text' : 'password'}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirmar senha"
               autoComplete="new-password"
-              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-zinc-500 w-full"
+              className="bg-transparent border-none outline-none text-white text-sm placeholder:text-[var(--color-fit-muted)] w-full"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="p-1 text-zinc-400 hover:text-zinc-200 transition shrink-0 cursor-pointer"
+              className="p-1 text-[var(--color-fit-muted)] hover:text-zinc-200 transition shrink-0 cursor-pointer"
             >
               {showConfirmPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -170,7 +170,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
             type="submit"
             disabled={isLoading}
             whileTap={{ scale: 0.98 }}
-            className="mt-2 w-full h-[52px] rounded-full bg-[#D4FF00] hover:bg-[#ddff22] text-black font-black italic text-base uppercase tracking-wide flex items-center justify-center transition shadow-lg cursor-pointer"
+            className="mt-2 w-full h-[52px] rounded-full bg-[var(--color-fit-green)] hover:bg-[#ddff22] text-black font-black italic text-base uppercase tracking-wide flex items-center justify-center transition shadow-lg cursor-pointer"
           >
             {isLoading ? 'Cadastrando...' : 'Cadastrar'}
           </motion.button>
@@ -178,7 +178,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
           {/* Divider "ou" */}
           <div className="flex items-center my-2">
             <div className="flex-1 h-[1px] bg-zinc-850" />
-            <span className="px-3 text-xs text-zinc-500 font-medium lowercase">
+            <span className="px-3 text-xs text-[var(--color-fit-muted)] font-medium lowercase">
               ou
             </span>
             <div className="flex-1 h-[1px] bg-zinc-850" />

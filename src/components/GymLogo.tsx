@@ -48,7 +48,7 @@ export const GymLogo: React.FC<GymLogoProps> = ({
       {/* GYMFIT Brand Text */}
       {showText && (
         <span
-          className={`font-display font-black italic tracking-[0.18em] text-white uppercase mt-4 ${dimensions.text}`}
+          className={`font-sans font-black italic tracking-[0.18em] text-white uppercase mt-4 ${dimensions.text}`}
           style={{ letterSpacing: '0.15em' }}
         >
           GYMFIT

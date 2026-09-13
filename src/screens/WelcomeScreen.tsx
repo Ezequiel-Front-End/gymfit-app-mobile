@@ -46,7 +46,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="mb-2 sm:mb-3"
         >
-          <h1 className="font-display font-black italic text-4xl sm:text-[44px] leading-[1.05] tracking-tight text-white uppercase drop-shadow-md">
+          <h1 className="font-sans font-black italic text-4xl sm:text-[44px] leading-[1.05] tracking-tight text-white uppercase drop-shadow-md">
             Energize <br />
             sua vida
           </h1>
@@ -69,19 +69,19 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.25 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full rounded-full bg-black/85 backdrop-blur-md border border-white/15 px-5 py-3 sm:py-3.5 flex items-center justify-between shadow-2xl transition hover:border-white/35 cursor-pointer group text-left"
+          className="w-full rounded-full bg-[var(--color-fit-bg)]/85 backdrop-blur-md border border-white/15 px-5 py-3 sm:py-3.5 flex items-center justify-between shadow-2xl transition hover:border-white/35 cursor-pointer group text-left"
         >
           <div className="flex flex-col">
-            <span className="font-display font-black italic text-white text-base sm:text-lg tracking-wide group-hover:text-zinc-100">
+            <span className="font-sans font-black italic text-white text-base sm:text-lg tracking-wide group-hover:text-zinc-100">
               Começar agora
             </span>
-            <span className="font-display italic text-xs text-zinc-400 font-medium mt-0.5">
+            <span className="font-sans italic text-xs text-[var(--color-fit-muted)] font-medium mt-0.5">
               Treinos guiados para evoluir
             </span>
           </div>
 
           {/* Lime Circle CTA Button */}
-          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#D4FF00] flex items-center justify-center text-black shadow-lg shrink-0 transition-transform group-hover:scale-105 group-hover:bg-[#ddff22] group-active:scale-95">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[var(--color-fit-green)] flex items-center justify-center text-black shadow-lg shrink-0 transition-transform group-hover:scale-105 group-hover:bg-[#ddff22] group-active:scale-95">
             <ArrowRight className="w-5 h-5 stroke-[2.8]" />
           </div>
         </motion.button>
