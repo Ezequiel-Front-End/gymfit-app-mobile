@@ -120,7 +120,7 @@ const translateExerciseName = (name: string): string => {
 
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
-    const url = '/api/exercisedb/api/v1/exercises?limit=300';
+    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=300';
     const response = await fetch(url);
     if (!response.ok) throw new Error('Falha na resposta da API');
     
