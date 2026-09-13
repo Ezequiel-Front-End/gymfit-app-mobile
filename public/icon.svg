@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="110" fill="#09090b"/>
+  <!-- GYMFIT Dumbbell Icon -->
+  <g transform="translate(0, -20)">
+    <!-- Left Outer Plate -->
+    <rect x="76" y="234" width="18" height="44" rx="9" fill="#F4F4ED" />
+    <!-- Left Middle Plate -->
+    <rect x="106" y="214" width="20" height="84" rx="10" fill="#F4F4ED" />
+    <!-- Left Inner Plate -->
+    <rect x="138" y="194" width="22" height="124" rx="11" fill="#F4F4ED" />
+
+    <!-- Center Bar -->
+    <rect x="172" y="245" width="168" height="22" rx="11" fill="#F4F4ED" />
+
+    <!-- Right Inner Plate -->
+    <rect x="352" y="194" width="22" height="124" rx="11" fill="#F4F4ED" />
+    <!-- Right Middle Plate -->
+    <rect x="386" y="214" width="20" height="84" rx="10" fill="#F4F4ED" />
+    <!-- Right Outer Plate -->
+    <rect x="418" y="234" width="18" height="44" rx="9" fill="#F4F4ED" />
+
+    <!-- GYMFIT Text -->
+    <text x="256" y="375" text-anchor="middle" fill="#FFFFFF" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-style="italic" font-size="42" letter-spacing="3">GYMFIT</text>
+  </g>
+</svg>

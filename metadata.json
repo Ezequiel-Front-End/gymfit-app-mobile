@@ -1,0 +1,8 @@
+{
+  "name": "GYMFIT-APP",
+  "description": "Aplicativo mobile PWA para academia com treinos guiados, evolução e design esportivo moderno.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
