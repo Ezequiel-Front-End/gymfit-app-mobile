@@ -77,7 +77,7 @@ export default function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('gymfit_user');
-    navigateTo('welcome', -1);
+    navigateTo('splash', -1);
   };
 
   const handleNavigateTab = (tab: import('./types').TabId) => {
@@ -331,14 +331,13 @@ export default function App() {
           </AnimatePresence>
 
           {/* Global Bottom Navigation */}
-          {['home', 'atividades', 'treino_detalhes', 'perfil'].includes(currentScreen) && (
+          {['home', 'atividades', 'perfil'].includes(currentScreen) && (
             <div className="absolute bottom-0 left-0 right-0 z-50">
               <BottomNavigation
                 activeTab={
                   currentScreen === 'home' ? 'inicio' :
-                  currentScreen === 'atividades' ? 'atividades' :
-                  currentScreen === 'treino_detalhes' ? 'treino' :
-                  currentScreen === 'perfil' ? 'perfil' : 'inicio'
+                    currentScreen === 'atividades' ? 'atividades' :
+                        currentScreen === 'perfil' ? 'perfil' : 'inicio'
                 }
                 onTabChange={handleNavigateTab}
               />
