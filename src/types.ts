@@ -1,4 +1,4 @@
-export type ScreenId = 'splash' | 'welcome' | 'login' | 'signup' | 'home' | 'atividades' | 'treinos' | 'treino_detalhes' | 'novo_treino' | 'adicionar_exercicios' | 'perfil';
+export type ScreenId = 'splash' | 'welcome' | 'login' | 'signup' | 'home' | 'atividades' | 'treinos' | 'treino_detalhes' | 'novo_treino' | 'adicionar_exercicios' | 'exercise_detail' | 'perfil';
 
 export interface UserProfile {
   id: string;

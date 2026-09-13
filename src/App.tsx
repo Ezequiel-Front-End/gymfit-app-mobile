@@ -17,6 +17,7 @@ import { WorkoutDetailsScreen } from './screens/WorkoutDetailsScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { NewWorkoutScreen } from './screens/NewWorkoutScreen';
 import { AddExercisesScreen } from './screens/AddExercisesScreen';
+import { ExerciseDetailScreen } from './screens/ExerciseDetailScreen';
 import { BottomNavigation } from './components/BottomNavigation';
 
 const SCREEN_STEPS: Record<ScreenId, number> = {
@@ -30,16 +31,19 @@ const SCREEN_STEPS: Record<ScreenId, number> = {
   treino_detalhes: 7,
   novo_treino: 8,
   adicionar_exercicios: 9,
-  perfil: 10,
+  exercise_detail: 10,
+  perfil: 11,
 };
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('splash');
   const [direction, setDirection] = useState<number>(1);
+  const [selectedExerciseDetail, setSelectedExerciseDetail] = useState<import('./api/exercises').Exercise | null>(null);
   const [user, setUser] = useState<UserProfile | null>(() => {
     const saved = localStorage.getItem('gymfit_user');
     return saved ? JSON.parse(saved) : null;
   });
+  const [newWorkoutExercises, setNewWorkoutExercises] = useState<import('./api/exercises').Exercise[]>([]);
 
   const navigateTo = (target: ScreenId, dir?: number) => {
     const targetStep = SCREEN_STEPS[target];
@@ -302,9 +306,20 @@ export default function App() {
                 className="absolute inset-0 w-full h-full"
               >
                 <NewWorkoutScreen
+                  exercises={newWorkoutExercises}
                   onClose={() => navigateTo('treinos', -1)}
                   onAddExercises={() => navigateTo('adicionar_exercicios', 1)}
-                  onFinish={() => navigateTo('treinos', -1)}
+                  onExerciseClick={(exercise) => {
+                    setSelectedExerciseDetail(exercise);
+                    navigateTo('exercise_detail', 1);
+                  }}
+                  onRemoveExercise={(exercise) => {
+                    setNewWorkoutExercises(prev => prev.filter(e => e.id !== exercise.id));
+                  }}
+                  onFinish={() => {
+                    setNewWorkoutExercises([]);
+                    navigateTo('treinos', -1);
+                  }}
                 />
               </motion.div>
             )}
@@ -322,9 +337,26 @@ export default function App() {
                 <AddExercisesScreen
                   onClose={() => navigateTo('novo_treino', -1)}
                   onAddSelected={(exercises) => {
-                    // Logic to handle added exercises would go here
+                    setNewWorkoutExercises(prev => [...prev, ...exercises]);
                     navigateTo('novo_treino', -1);
                   }}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'exercise_detail' && selectedExerciseDetail && (
+              <motion.div
+                key="exercise_detail"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <ExerciseDetailScreen
+                  exercise={selectedExerciseDetail}
+                  onBack={() => navigateTo('novo_treino', -1)}
                 />
               </motion.div>
             )}
