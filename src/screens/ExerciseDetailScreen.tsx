@@ -53,7 +53,7 @@ export const ExerciseDetailScreen: React.FC<Props> = ({ exercise, onBack }) => {
           <img 
             src={exercise.gifUrl} 
             alt={exercise.name} 
-            className="w-[90%] h-[90%] object-contain mix-blend-multiply filter hue-rotate-180"
+            className="w-[90%] h-[90%] object-contain"
           />
           <div className="absolute top-3 right-3 w-[26px] h-[26px] rounded-full border border-black/80 flex items-center justify-center bg-white/50 backdrop-blur-sm">
             <Pause className="w-3 h-3 text-black" fill="currentColor" />
@@ -113,7 +113,7 @@ export const ExerciseDetailScreen: React.FC<Props> = ({ exercise, onBack }) => {
                <img 
                 src={exercise.gifUrl} 
                 alt={exercise.name} 
-                className="w-full h-full object-contain filter hue-rotate-180 scale-125 origin-center"
+                className="w-full h-full object-contain scale-125 origin-center"
               />
             </div>
             

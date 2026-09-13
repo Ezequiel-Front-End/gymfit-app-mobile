@@ -44,6 +44,7 @@ export default function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [newWorkoutExercises, setNewWorkoutExercises] = useState<import('./api/exercises').Exercise[]>([]);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const navigateTo = (target: ScreenId, dir?: number) => {
     const targetStep = SCREEN_STEPS[target];
@@ -291,6 +292,7 @@ export default function App() {
                   onBack={() => navigateTo('home', -1)}
                   onNavigateTab={handleNavigateTab}
                   onLogout={handleLogout}
+                  onModalStateChange={setIsProfileModalOpen}
                 />
               </motion.div>
             )}
@@ -363,7 +365,7 @@ export default function App() {
           </AnimatePresence>
 
           {/* Global Bottom Navigation */}
-          {['home', 'atividades', 'perfil'].includes(currentScreen) && (
+          {['home', 'atividades', 'perfil'].includes(currentScreen) && !isProfileModalOpen && (
             <div className="absolute bottom-0 left-0 right-0 z-50">
               <BottomNavigation
                 activeTab={
