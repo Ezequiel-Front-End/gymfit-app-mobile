@@ -44,7 +44,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-[var(--color-fit-bg)] text-[var(--color-fit-text)] flex flex-col justify-between overflow-hidden select-none z-0">
       <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
         {/* Top Header */}
-        <div className="px-6 pt-10 pb-2 flex items-center">
+        <div className="px-6 pt-16 pb-2 flex items-center">
           <h1 className="font-sans font-black italic text-2xl tracking-tight text-white">
             Perfil
           </h1>

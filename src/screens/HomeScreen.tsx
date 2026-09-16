@@ -30,7 +30,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onNavigateTab }) =
   return (
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-[var(--color-fit-bg)] text-white flex flex-col justify-between overflow-hidden select-none">
       {/* Scrollable Main Content */}
-      <div className="flex-1 px-5 pt-6 pb-28 flex flex-col gap-6 max-w-md mx-auto w-full overflow-y-auto no-scrollbar">
+      <div className="flex-1 px-5 pt-16 pb-28 flex flex-col gap-6 max-w-md mx-auto w-full overflow-y-auto no-scrollbar">
         {/* Top Header: Greeting & Notification Icon */}
         <header className="flex items-center justify-between">
           <div className="flex flex-col">

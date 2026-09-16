@@ -57,7 +57,7 @@ export const WorkoutsScreen: React.FC<WorkoutsScreenProps> = ({
   return (
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-[var(--color-fit-bg)] text-white flex flex-col justify-between overflow-hidden select-none">
       {/* Top Header */}
-      <div className="px-[18px] pt-12 pb-4 flex items-center gap-4">
+      <div className="px-[18px] pt-16 pb-4 flex items-center gap-4">
         <button
           onClick={onBack}
           className="p-1 -ml-1 rounded-full hover:bg-zinc-900 transition-colors"

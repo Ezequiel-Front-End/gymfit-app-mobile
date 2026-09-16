@@ -19,6 +19,7 @@ import { NewWorkoutScreen } from './screens/NewWorkoutScreen';
 import { AddExercisesScreen } from './screens/AddExercisesScreen';
 import { ExerciseDetailScreen } from './screens/ExerciseDetailScreen';
 import { BottomNavigation } from './components/BottomNavigation';
+import { LibraryScreen } from './screens/LibraryScreen';
 
 const SCREEN_STEPS: Record<ScreenId, number> = {
   splash: 0,
@@ -33,6 +34,7 @@ const SCREEN_STEPS: Record<ScreenId, number> = {
   adicionar_exercicios: 9,
   exercise_detail: 10,
   perfil: 11,
+  biblioteca: 12,
 };
 
 export default function App() {
@@ -95,6 +97,9 @@ export default function App() {
         break;
       case 'treino':
         navigateTo('treinos');
+        break;
+      case 'biblioteca':
+        navigateTo('biblioteca');
         break;
       case 'perfil':
         navigateTo('perfil');
@@ -297,6 +302,23 @@ export default function App() {
               </motion.div>
             )}
 
+            {currentScreen === 'biblioteca' && (
+              <motion.div
+                key="biblioteca"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full overflow-y-auto no-scrollbar"
+              >
+                <LibraryScreen
+                  onBack={() => navigateTo('home', -1)}
+                  onNavigateTab={handleNavigateTab}
+                />
+              </motion.div>
+            )}
+
             {currentScreen === 'novo_treino' && (
               <motion.div
                 key="novo_treino"
@@ -365,13 +387,14 @@ export default function App() {
           </AnimatePresence>
 
           {/* Global Bottom Navigation */}
-          {['home', 'atividades', 'perfil'].includes(currentScreen) && !isProfileModalOpen && (
+          {['home', 'atividades', 'perfil', 'biblioteca'].includes(currentScreen) && !isProfileModalOpen && (
             <div className="absolute bottom-0 left-0 right-0 z-50">
               <BottomNavigation
                 activeTab={
                   currentScreen === 'home' ? 'inicio' :
                     currentScreen === 'atividades' ? 'atividades' :
-                        currentScreen === 'perfil' ? 'perfil' : 'inicio'
+                        currentScreen === 'perfil' ? 'perfil' : 
+                            currentScreen === 'biblioteca' ? 'biblioteca' : 'inicio'
                 }
                 onTabChange={handleNavigateTab}
               />

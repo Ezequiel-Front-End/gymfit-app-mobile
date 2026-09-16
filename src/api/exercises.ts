@@ -4,6 +4,7 @@ export interface Exercise {
   targetMuscle: string;
   gifUrl: string; 
   images: string[];
+  instructions?: string[];
 }
 
 
@@ -114,13 +115,9 @@ const translateExerciseName = (name: string): string => {
     translated = translated.replace(regex, pt);
   });
   
-  // Capitalize first letter of each word
-  return translated.replace(/\b\w/g, char => char.toUpperCase());
-};
-
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
-    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=300';
+    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=1300';
     const response = await fetch(url);
     if (!response.ok) throw new Error('Falha na resposta da API');
     
@@ -144,7 +141,8 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
           name: translatedName,
           targetMuscle: translatedMuscle,
           gifUrl: item.gifUrl,
-          images: []
+          images: [],
+          instructions: item.instructions ? item.instructions.map((i: string) => i.replace(/Step:\s*\d+\s*/gi, '')) : []
         });
       }
     });

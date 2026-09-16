@@ -13,13 +13,22 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
 }) => {
   return (
     <div className="w-full mx-auto relative z-40 px-0 pb-0 pt-6 pointer-events-auto shrink-0">
-      <div className="relative w-full bg-[#0A0A0A] rounded-t-[32px] rounded-b-none border-t-[2px] border-[var(--color-fit-green)] px-6 pt-4 pb-6 flex items-center justify-between shadow-2xl">
+      <div className="relative w-full bg-[#0A0A0A] rounded-t-[32px] rounded-b-none px-6 pt-4 pb-6 flex items-center justify-between shadow-2xl">
         
+        {/* Border Overlay that follows the curve perfectly but fades out on the sides */}
+        <div 
+          className="absolute inset-0 pointer-events-none rounded-t-[32px] border-t-[2px] border-x-[2px] border-[var(--color-fit-green)]"
+          style={{ 
+            maskImage: 'linear-gradient(to bottom, black 34px, transparent 60px)', 
+            WebkitMaskImage: 'linear-gradient(to bottom, black 34px, transparent 60px)' 
+          }}
+        />
+
         {/* 1. Tab: Início */}
         <button
           type="button"
           onClick={() => onTabChange('inicio')}
-          className={`flex flex-col items-center justify-center gap-1.5 cursor-pointer transition select-none group w-14 ${
+          className={`relative z-10 flex flex-col items-center justify-center gap-1.5 cursor-pointer transition select-none group w-14 ${
             activeTab === 'inicio' ? 'opacity-100' : 'opacity-70 hover:opacity-100'
           }`}
         >

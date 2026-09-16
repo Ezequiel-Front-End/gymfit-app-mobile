@@ -57,7 +57,7 @@ export const NewWorkoutScreen: React.FC<NewWorkoutScreenProps> = ({
   return (
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-[var(--color-fit-bg)] text-[var(--color-fit-text)] flex flex-col overflow-hidden select-none z-50">
       {/* Top Header */}
-      <div className="px-5 pt-12 pb-4 flex items-center justify-between">
+      <div className="px-5 pt-16 pb-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button onClick={onClose} className="p-2 -ml-2 rounded-full hover:bg-[var(--color-fit-panel)] transition-colors">
             <ChevronDown className="w-6 h-6 text-white" />

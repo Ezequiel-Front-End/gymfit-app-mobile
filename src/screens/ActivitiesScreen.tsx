@@ -24,7 +24,7 @@ export const ActivitiesScreen: React.FC<ActivitiesScreenProps> = ({
   return (
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-[var(--color-fit-bg)] text-white flex flex-col justify-between overflow-hidden select-none">
       {/* Top Header */}
-      <div className="px-6 pt-10 pb-2 flex items-center">
+      <div className="px-6 pt-16 pb-2 flex items-center">
         <h1 className="font-sans font-black italic text-2xl tracking-tight text-white">
           Atividades
         </h1>

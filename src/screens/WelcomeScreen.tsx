@@ -38,7 +38,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
       </div>
 
       {/* Bottom Content Area */}
-      <div className="relative z-10 w-full px-6 pb-10 pt-8 flex flex-col max-w-md mx-auto">
+      <div className="relative z-10 w-full px-6 pb-10 pt-16 flex flex-col max-w-md mx-auto">
         {/* Headline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -25,7 +25,7 @@ export const WorkoutDetailsScreen: React.FC<WorkoutDetailsScreenProps> = ({
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto no-scrollbar pb-10">
         {/* Top Header */}
-        <div className="px-5 pt-8 pb-4 flex items-center gap-4">
+        <div className="px-5 pt-16 pb-4 flex items-center gap-4">
           <button
             onClick={onBack}
             className="p-1 -ml-1 rounded-full hover:bg-zinc-900 transition-colors"

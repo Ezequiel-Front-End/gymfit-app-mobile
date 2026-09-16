@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X, Search, SlidersHorizontal, Plus, Bookmark, Dumbbell, UserRound, UsersRound, Shirt, List, Check } from 'lucide-react';
 import { Exercise, fetchExercises } from '../api/exercises';
 
@@ -34,7 +34,11 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
   
-  const categories = ['Todos', 'Peito', 'Costas', 'Ombros', 'Bíceps/Tríceps'];
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(exercises.map(ex => ex.targetMuscle));
+    const sortedCategories = Array.from(uniqueCategories).sort();
+    return ['Todos', ...sortedCategories];
+  }, [exercises]);
   
   useEffect(() => {
     const loadData = async () => {
@@ -78,7 +82,7 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
   return (
     <div className="relative w-full h-full min-h-screen sm:min-h-full flex-1 bg-black text-white flex flex-col overflow-hidden select-none z-50">
       {/* Header */}
-      <div className="px-[22px] pt-12 pb-4 flex items-center justify-between">
+      <div className="px-[22px] pt-16 pb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button onClick={onClose} className="p-1 -ml-1 rounded-full hover:bg-[#111] transition-colors">
             <X className="w-[22px] h-[22px] text-white" />
