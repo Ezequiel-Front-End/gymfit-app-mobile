@@ -115,6 +115,10 @@ const translateExerciseName = (name: string): string => {
     translated = translated.replace(regex, pt);
   });
   
+  // Capitalize first letter of each word
+  return translated.replace(/\b\w/g, char => char.toUpperCase());
+};
+
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
     const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=1300';
