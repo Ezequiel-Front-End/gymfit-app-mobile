@@ -4,7 +4,7 @@ import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { GoogleIcon } from '../components/GoogleIcon';
 
 interface SignupScreenProps {
-  onSignupSuccess: (name: string, email: string) => void;
+  onSignupSuccess: (name: string, email: string, role?: 'aluno' | 'professor') => void;
   onGoToLogin: () => void;
   onBack?: () => void;
 }
@@ -21,6 +21,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState<'aluno' | 'professor'>('aluno');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      onSignupSuccess(name, email);
+      onSignupSuccess(name, email, role);
     }, 400);
   };
 
@@ -155,6 +156,32 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
               ) : (
                 <Eye className="w-5 h-5" />
               )}
+            </button>
+          </div>
+
+          {/* Role Selection */}
+          <div className="flex items-center gap-3 my-1">
+            <button
+              type="button"
+              onClick={() => setRole('aluno')}
+              className={`flex-1 py-3 rounded-2xl text-sm font-semibold transition ${
+                role === 'aluno'
+                  ? 'bg-[var(--color-fit-green)] text-black'
+                  : 'bg-[#111114] border border-zinc-800/90 text-[var(--color-fit-muted)] hover:text-white'
+              }`}
+            >
+              Sou Aluno
+            </button>
+            <button
+              type="button"
+              onClick={() => setRole('professor')}
+              className={`flex-1 py-3 rounded-2xl text-sm font-semibold transition ${
+                role === 'professor'
+                  ? 'bg-[var(--color-fit-green)] text-black'
+                  : 'bg-[#111114] border border-zinc-800/90 text-[var(--color-fit-muted)] hover:text-white'
+              }`}
+            >
+              Sou Professor
             </button>
           </div>
 

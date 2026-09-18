@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Plus, ArrowUpDown, Grid2X2, Bookmark } from 'lucide-react';
+import { Plus, ArrowUpDown, Grid2X2, Bookmark, Users, UserPlus } from 'lucide-react';
 import { TabId } from '../types';
 
 interface LibraryScreenProps {
@@ -63,6 +63,27 @@ export const LibraryScreen: React.FC<LibraryScreenProps> = ({ onBack, onNavigate
             </div>
             <div className="flex-1">
               <span className="text-[14px] font-[500] text-white">Criar novo programa</span>
+            </div>
+          </button>
+
+          {/* Create Workout for Student */}
+          <button type="button" className="flex items-center gap-4 w-full text-left group">
+            <div className="w-[58px] h-[58px] bg-[#252229] rounded-[3px] flex items-center justify-center shrink-0 group-active:scale-95 transition-transform">
+              <UserPlus size={24} color="#FFFFFF" />
+            </div>
+            <div className="flex-1">
+              <span className="text-[14px] font-[500] text-white">Criar treino para aluno</span>
+            </div>
+          </button>
+
+          {/* Student List */}
+          <button type="button" className="flex items-center gap-4 w-full text-left group">
+            <div className="w-[58px] h-[58px] bg-[#252229] rounded-[3px] flex items-center justify-center shrink-0 group-active:scale-95 transition-transform">
+              <Users size={24} color="#FFFFFF" />
+            </div>
+            <div className="flex-1 flex flex-col justify-center">
+              <span className="text-[14px] font-[500] text-white mb-0.5">Lista de alunos</span>
+              <span className="text-[11px] font-normal text-[#8B8991]">Gerenciar seus alunos</span>
             </div>
           </button>
 
