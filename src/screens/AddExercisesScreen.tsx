@@ -26,6 +26,11 @@ const StaticGif: React.FC<{ src: string; alt: string; className?: string }> = ({
   return <canvas ref={canvasRef} className={className} aria-label={alt} />;
 };
 
+const formatExerciseName = (name: string) => {
+  if (!name) return '';
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+};
+
 export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose, onAddSelected }) => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
@@ -156,7 +161,7 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
                 <div
                   key={exercise.id}
                   onClick={() => toggleSelection(exercise)}
-                  className={`w-full aspect-[168/222] bg-[#262428] rounded-[10px] overflow-hidden flex flex-col relative cursor-pointer transition-all ${
+                  className={`w-full h-full bg-[#262428] rounded-[10px] overflow-hidden flex flex-col relative cursor-pointer transition-all ${
                     isSelected ? 'ring-2 ring-white ring-offset-2 ring-offset-black' : ''
                   }`}
                 >
@@ -176,7 +181,7 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
                   </div>
 
                   {/* Image container */}
-                  <div className="w-full flex-1 bg-[#262428] relative flex items-center justify-center p-4">
+                  <div className="w-full aspect-[4/5] shrink-0 bg-[#262428] relative flex items-center justify-center p-4">
                     <StaticGif
                       src={exercise.gifUrl}
                       alt={exercise.name}
@@ -185,11 +190,11 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
                   </div>
 
                   {/* Info Bar */}
-                  <div className="w-full flex-1 min-h-[64px] bg-[#302E33] px-3.5 py-3 flex flex-col justify-center">
-                    <span className="font-sans font-extrabold text-[12px] sm:text-[14px] leading-tight text-white line-clamp-2">
-                      {exercise.name}
+                  <div className="w-full flex-1 bg-[#302E33] px-3.5 py-3.5 flex flex-col justify-start">
+                    <span className="font-sans font-extrabold text-[12px] sm:text-[14px] leading-tight text-white mb-1.5">
+                      {formatExerciseName(exercise.name)}
                     </span>
-                    <span className="font-sans font-semibold text-[10px] sm:text-[11.5px] text-[#B8B8BE] capitalize mt-1">
+                    <span className="font-sans font-semibold text-[10px] sm:text-[11.5px] text-[#B8B8BE] capitalize mt-auto">
                       {exercise.targetMuscle}
                     </span>
                   </div>
