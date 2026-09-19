@@ -209,26 +209,43 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
     // O plano gratuito (free tier) retorna no máximo 25 itens por página, com total de ~200 itens.
     // Vamos buscar as 8 páginas simultaneamente para carregar o máximo de opções de pernas, costas, etc.
     const offsets = [0, 25, 50, 75, 100, 125, 150, 175];
-    
-    const fetchPromises = offsets.map(async (offset) => {
+    const results = [];
+
+    for (const offset of offsets) {
       try {
         const url = `https://edb-with-videos-and-images-by-ascendapi.p.rapidapi.com/api/v1/exercises?limit=25&offset=${offset}`;
-        const response = await fetch(url, {
+        let response = await fetch(url, {
           method: 'GET',
           headers: {
             'X-RapidAPI-Key': apiKey,
             'X-RapidAPI-Host': 'edb-with-videos-and-images-by-ascendapi.p.rapidapi.com'
           }
         });
-        if (!response.ok) return [];
-        const json = await response.json();
-        return Array.isArray(json.data) ? json.data : [];
-      } catch (e) {
-        return [];
-      }
-    });
 
-    const results = await Promise.all(fetchPromises);
+        // Se der Rate Limit (429), aguarda 1 segundo e tenta mais uma vez
+        if (response.status === 429) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'X-RapidAPI-Key': apiKey,
+              'X-RapidAPI-Host': 'edb-with-videos-and-images-by-ascendapi.p.rapidapi.com'
+            }
+          });
+        }
+
+        if (response.ok) {
+          const json = await response.json();
+          results.push(Array.isArray(json.data) ? json.data : []);
+        }
+        
+        // Pequeno delay entre requests para não sobrecarregar a API gratuita
+        await new Promise(resolve => setTimeout(resolve, 200));
+      } catch (e) {
+        console.error(`Erro na página de offset ${offset}:`, e);
+      }
+    }
+
     const exercisesArray = results.flat();
 
     exercisesArray.forEach((item: any) => {
