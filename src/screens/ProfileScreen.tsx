@@ -10,6 +10,8 @@ interface ProfileScreenProps {
   onNavigateTab: (tab: TabId) => void;
   onLogout: () => void;
   onModalStateChange?: (isOpen: boolean) => void;
+  onOpenNotifications?: () => void;
+  onOpenMyProfile?: () => void;
 }
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
@@ -18,6 +20,8 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   onNavigateTab,
   onLogout,
   onModalStateChange,
+  onOpenNotifications,
+  onOpenMyProfile,
 }) => {
   const [activeTab, setActiveTab] = useState<TabId>('perfil');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -72,6 +76,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           {options.map((opt) => (
             <button
               key={opt.id}
+              onClick={() => {
+                if (opt.id === 'notificacoes' && onOpenNotifications) {
+                  onOpenNotifications();
+                } else if (opt.id === 'meu_perfil' && onOpenMyProfile) {
+                  onOpenMyProfile();
+                }
+              }}
               className="w-full h-[50px] bg-[var(--color-fit-panel)] border border-[#242424] rounded-2xl flex items-center justify-between px-4 active:scale-95 transition-transform"
             >
               <div className="flex items-center gap-4">

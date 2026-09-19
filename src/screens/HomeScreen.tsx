@@ -14,9 +14,10 @@ interface HomeScreenProps {
   user?: UserProfile | null;
   onLogout?: () => void;
   onNavigateTab?: (tab: TabId) => void;
+  onOpenNotifications?: () => void;
 }
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onNavigateTab }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onNavigateTab, onOpenNotifications }) => {
   const [activeTab, setActiveTab] = useState<TabId>('inicio');
   const [hasNotification, setHasNotification] = useState(true);
   const [selectedTrainingType, setSelectedTrainingType] = useState<string>('Aquecimento');
@@ -49,7 +50,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onNavigateTab }) =
           {/* Notification Bell Button */}
           <button
             type="button"
-            onClick={() => setHasNotification(false)}
+            onClick={() => {
+              setHasNotification(false);
+              if (onOpenNotifications) onOpenNotifications();
+            }}
             aria-label="Notificações"
             className="relative p-2 rounded-full hover:bg-zinc-900 transition text-white cursor-pointer"
           >

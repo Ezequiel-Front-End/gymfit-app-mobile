@@ -21,6 +21,9 @@ import { ExerciseDetailScreen } from './screens/ExerciseDetailScreen';
 import { BottomNavigation } from './components/BottomNavigation';
 import { LibraryScreen } from './screens/LibraryScreen';
 import { FinishWorkoutScreen } from './screens/FinishWorkoutScreen';
+import { NotificationsScreen } from './screens/NotificationsScreen';
+import { NotificationSettingsScreen } from './screens/NotificationSettingsScreen';
+import { MyProfileScreen } from './screens/MyProfileScreen';
 
 const SCREEN_STEPS: Record<ScreenId, number> = {
   splash: 0,
@@ -37,6 +40,9 @@ const SCREEN_STEPS: Record<ScreenId, number> = {
   perfil: 11,
   biblioteca: 12,
   finish_workout: 13,
+  notificacoes: 14,
+  notification_settings: 15,
+  my_profile: 16,
 };
 
 export default function App() {
@@ -229,6 +235,7 @@ export default function App() {
                   user={user}
                   onLogout={handleLogout}
                   onNavigateTab={handleNavigateTab}
+                  onOpenNotifications={() => navigateTo('notificacoes', 1)}
                 />
               </motion.div>
             )}
@@ -301,6 +308,8 @@ export default function App() {
                   onNavigateTab={handleNavigateTab}
                   onLogout={handleLogout}
                   onModalStateChange={setIsProfileModalOpen}
+                  onOpenNotifications={() => navigateTo('notification_settings', 1)}
+                  onOpenMyProfile={() => navigateTo('my_profile', 1)}
                 />
               </motion.div>
             )}
@@ -409,6 +418,56 @@ export default function App() {
                 <ExerciseDetailScreen
                   exercise={selectedExerciseDetail}
                   onBack={() => navigateTo('novo_treino', -1)}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'notificacoes' && (
+              <motion.div
+                key="notificacoes"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <NotificationsScreen
+                  onBack={() => navigateTo('home', -1)}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'notification_settings' && (
+              <motion.div
+                key="notification_settings"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <NotificationSettingsScreen
+                  onBack={() => navigateTo('perfil', -1)}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'my_profile' && (
+              <motion.div
+                key="my_profile"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <MyProfileScreen
+                  user={user}
+                  onBack={() => navigateTo('perfil', -1)}
+                  onOpenSettings={() => navigateTo('notification_settings', 1)}
                 />
               </motion.div>
             )}

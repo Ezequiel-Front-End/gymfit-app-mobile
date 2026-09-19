@@ -87,13 +87,13 @@ export const WorkoutsScreen: React.FC<WorkoutsScreenProps> = ({
       </div>
 
       {/* Workouts List */}
-      <div className="flex-1 px-6 flex flex-col gap-3 overflow-y-auto no-scrollbar pb-32">
+      <div className="flex-1 px-6 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-32">
         {filteredWorkouts.length > 0 ? (
           filteredWorkouts.map((workout) => (
             <button
               key={workout.id}
               onClick={() => onSelectWorkout(workout.id)}
-              className="relative w-full h-[96px] rounded-[22px] overflow-hidden group bg-[var(--color-fit-panel)] cursor-pointer"
+              className="relative w-full h-[130px] rounded-[22px] overflow-hidden group bg-[var(--color-fit-panel)] cursor-pointer"
             >
               <img
                 src={workout.image}
@@ -104,10 +104,10 @@ export const WorkoutsScreen: React.FC<WorkoutsScreenProps> = ({
               <div className="absolute inset-0 bg-gradient-to-r from-[#050B14F2] via-[#050B14CC] to-[#050B140D]" />
               
               <div className="absolute inset-0 p-[22px] flex flex-col justify-center items-start text-left">
-                <h3 className="font-sans font-black italic text-[16px] text-white">
+                <h3 className="font-sans font-black italic text-[18px] text-white">
                   {workout.title}
                 </h3>
-                <p className="text-[#D8E0EA] text-[12px] font-bold mt-1">
+                <p className="text-[#D8E0EA] text-[13px] font-bold mt-1">
                   {workout.details}
                 </p>
               </div>
