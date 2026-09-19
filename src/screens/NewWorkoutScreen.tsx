@@ -263,7 +263,12 @@ const WorkoutExerciseItem: React.FC<{
             onImageClick();
           }}
         >
-          <StaticGif src={exercise.gifUrl} alt={exercise.name} className="w-[85%] h-[85%] object-contain" />
+          <img 
+            src={exercise.imageUrl || exercise.gifUrl} 
+            alt={exercise.name} 
+            className="w-[85%] h-[85%] object-contain"
+            loading="lazy" 
+          />
           <div className="absolute bottom-1 right-1 text-[#C4C4C4] font-sans font-bold text-[10px]">?</div>
         </div>
         

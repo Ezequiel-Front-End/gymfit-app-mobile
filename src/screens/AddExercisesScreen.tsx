@@ -38,6 +38,8 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
   const [loading, setLoading] = useState(true);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   
   const categories = useMemo(() => {
     const uniqueCategories = new Set(exercises.map(ex => ex.targetMuscle));
@@ -57,8 +59,12 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
 
   const filteredExercises = exercises.filter(ex => {
     if (showFavoritesOnly && !favorites.includes(ex.id)) return false;
-    if (activeCategory === 'Todos') return true;
-    return ex.targetMuscle === activeCategory;
+    if (activeCategory !== 'Todos' && ex.targetMuscle !== activeCategory) return false;
+    if (searchQuery.trim().length > 0) {
+      const formattedName = formatExerciseName(ex.name);
+      if (!formattedName.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    }
+    return true;
   });
 
   const toggleFavorite = (e: React.MouseEvent, id: string) => {
@@ -94,10 +100,31 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
           </button>
           <h1 className="font-sans font-extrabold text-[15px] sm:text-[17px]">Adicionar exercícios</h1>
         </div>
-        <div className="flex items-center gap-[18px]">
-          <Search className="w-[22px] h-[22px] text-white" />
-          <SlidersHorizontal className="w-[24px] h-[24px] text-white" />
-          <Plus className="w-[22px] h-[22px] text-white" />
+        <div className="flex items-center gap-[18px] flex-1 justify-end ml-4 transition-all">
+          {isSearching ? (
+            <div className="flex-1 flex items-center bg-[#18181B] rounded-full px-3 py-1.5 border border-[#333] max-w-[200px]">
+              <Search className="w-[16px] h-[16px] text-[#A1A1AA] mr-2 shrink-0" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar..."
+                className="flex-1 bg-transparent outline-none text-[14px] text-white placeholder:text-[#A1A1AA] min-w-0"
+                autoFocus
+              />
+              <button onClick={() => { setIsSearching(false); setSearchQuery(''); }} className="ml-2 shrink-0">
+                <X className="w-[16px] h-[16px] text-[#A1A1AA]" />
+              </button>
+            </div>
+          ) : (
+            <>
+              <button onClick={() => setIsSearching(true)} className="active:scale-95 transition-transform">
+                <Search className="w-[22px] h-[22px] text-white" />
+              </button>
+              <SlidersHorizontal className="w-[24px] h-[24px] text-white" />
+              <Plus className="w-[22px] h-[22px] text-white" />
+            </>
+          )}
         </div>
       </div>
 
@@ -148,7 +175,7 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
           <div className="w-full h-full flex flex-col items-center justify-center text-center opacity-80 pt-20">
             <Bookmark className="w-12 h-12 text-[#333] mb-4" strokeWidth={1.5} />
             <h3 className="font-sans font-bold text-[18px] text-white">
-              Nenhum exercício favoritado
+              {showFavoritesOnly ? "Nenhum exercício favoritado" : "Nenhum exercício encontrado"}
             </h3>
           </div>
         ) : (
@@ -182,10 +209,12 @@ export const AddExercisesScreen: React.FC<AddExercisesScreenProps> = ({ onClose,
 
                   {/* Image container */}
                   <div className="w-full aspect-[4/5] shrink-0 bg-[#262428] relative flex items-center justify-center p-4">
-                    <StaticGif
-                      src={exercise.gifUrl}
+                    <img
+                      src={exercise.imageUrl || exercise.gifUrl}
                       alt={exercise.name}
-                      className="w-[90%] h-[90%] object-contain mix-blend-screen opacity-100 rounded-md filter invert hue-rotate-180"
+                      className="w-[90%] h-[90%] object-contain rounded-md"
+                      style={{ filter: 'invert(1) hue-rotate(180deg) contrast(1.2)', mixBlendMode: 'screen' }}
+                      loading="lazy"
                     />
                   </div>
 

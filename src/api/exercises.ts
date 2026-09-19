@@ -2,14 +2,15 @@ export interface Exercise {
   id: string;
   name: string;
   targetMuscle: string;
-  gifUrl: string; 
+  imageUrl?: string;
+  videoUrl?: string;
+  gifUrl?: string; // Mantido por compatibilidade temporária
   images: string[];
   instructions?: string[];
 }
 
-
-
 export const BODY_PART_TRANSLATIONS: Record<string, string> = {
+  // Categorias originais e V1
   "chest": "Peito",
   "back": "Costas",
   "shoulders": "Ombros",
@@ -19,11 +20,99 @@ export const BODY_PART_TRANSLATIONS: Record<string, string> = {
   "upper legs": "Coxas",
   "lower legs": "Panturrilhas",
   "cardio": "Cardio",
-  "neck": "Pescoço"
+  "neck": "Pescoço",
+  
+  // Categorias free-exercise-db e possíveis V2
+  "abdominals": "Abdômen",
+  "abductors": "Coxas",
+  "adductors": "Coxas",
+  "biceps": "Bíceps/Tríceps",
+  "calves": "Panturrilhas",
+  "forearms": "Antebraço",
+  "glutes": "Glúteos", 
+  "hamstrings": "Coxas",
+  "lats": "Costas",
+  "lower back": "Costas",
+  "middle back": "Costas",
+  "quadriceps": "Coxas",
+  "traps": "Costas",
+  "triceps": "Bíceps/Tríceps"
+};
+
+export const MUSCLE_TRANSLATIONS: Record<string, string> = {
+  "pectoralis major sternal head": "Peitoral Maior",
+  "pectoralis major clavicular head": "Peitoral Superior",
+  "anterior deltoid": "Deltóide Frontal",
+  "lateral deltoid": "Deltóide Lateral",
+  "posterior deltoid": "Deltóide Posterior",
+  "triceps brachii": "Tríceps",
+  "biceps brachii": "Bíceps",
+  "brachialis": "Braquial",
+  "brachioradialis": "Braquiorradial",
+  "rectus abdominis": "Reto Abdominal",
+  "obliques": "Oblíquos",
+  "transverse abdominis": "Transverso Abdominal",
+  "latissimus dorsi": "Dorsal (Asas)",
+  "trapezius": "Trapézio",
+  "rhomboids": "Rombóides",
+  "erector spinae": "Eretores da Espinha",
+  "gluteus maximus": "Glúteo Máximo",
+  "gluteus medius": "Glúteo Médio",
+  "gluteus minimus": "Glúteo Mínimo",
+  "quadriceps": "Quadríceps",
+  "rectus femoris": "Reto Femoral",
+  "vastus lateralis": "Vasto Lateral",
+  "vastus medialis": "Vasto Medial",
+  "hamstrings": "Isquiotibiais",
+  "biceps femoris": "Bíceps Femoral",
+  "semitendinosus": "Semitendíneo",
+  "semimembranosus": "Semimembranáceo",
+  "gastrocnemius": "Gastrocnêmio (Panturrilha)",
+  "soleus": "Sóleo",
+  "tensor fasciae latae": "Tensor da Fáscia Lata",
+  "iliopsoas": "Iliopsoas",
+  "pectineus": "Pectíneo",
+  "sartorius": "Sartório",
+  "adductor longus": "Adutor Longo",
+  "adductor brevis": "Adutor Curto",
+  "adductor magnus": "Adutor Magno",
+  "gracilis": "Grácil"
+};
+
+export const EQUIPMENT_TRANSLATIONS: Record<string, string> = {
+  "body weight": "Peso Corporal",
+  "barbell": "Barra",
+  "dumbbell": "Halter",
+  "kettlebell": "Kettlebell",
+  "cable": "Polia",
+  "machine": "Máquina",
+  "leverage machine": "Máquina Articulada",
+  "smith machine": "Máquina Smith",
+  "band": "Elástico/Band",
+  "resistance band": "Faixa Elástica",
+  "medicine ball": "Bola Medicinal",
+  "stability ball": "Bola Suíça",
+  "bosu ball": "Bosu",
+  "foam roller": "Rolo de Espuma",
+  "ez barbell": "Barra EZ",
+  "trap bar": "Barra Hexagonal",
+  "rope": "Corda",
+  "wheel roller": "Roda Abdominal",
+  "step mill": "Escada",
+  "elliptical machine": "Elíptico",
+  "stationary bike": "Bicicleta Ergométrica",
+  "rowing machine": "Remo Seco",
+  "sled": "Trenó"
+};
+
+export const translateTerm = (term: string, dict: Record<string, string>): string => {
+  if (!term) return '';
+  const lower = term.toLowerCase().trim();
+  if (dict[lower]) return dict[lower];
+  return term;
 };
 
 const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
-  // Movimentos Específicos (Maior prioridade)
   "bench press": "Supino",
   "leg press": "Leg Press",
   "deadlift": "Levantamento Terra",
@@ -36,8 +125,6 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
   "upward facing dog": "Cachorro Olhando para Cima",
   "cross-over": "Crossover",
   "pulldown": "Puxada",
-  
-  // Equipamentos e Modificadores
   "barbell": "com Barra",
   "dumbbell": "com Halter",
   "cable": "na Polia",
@@ -49,8 +136,6 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
   "assisted": "Assistido",
   "weighted": "com Peso",
   "machine": "na Máquina",
-
-  // Posições e Pegadas
   "seated": "Sentado",
   "standing": "em Pé",
   "lying": "Deitado",
@@ -67,8 +152,6 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
   "underhand": "Pegada Supinada",
   "overhand": "Pegada Pronada",
   "neutral grip": "Pegada Neutra",
-
-  // Movimentos Básicos
   "press": "Desenvolvimento",
   "fly": "Crucifixo",
   "curl": "Rosca",
@@ -84,8 +167,6 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
   "dip": "Mergulho",
   "kick": "Chute",
   "step-up": "Subida no Banco",
-
-  // Anatomia comum nos nomes
   "chest": "Peito",
   "biceps": "Bíceps",
   "triceps": "Tríceps",
@@ -94,8 +175,6 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
   "front": "Frontal",
   "side": "Lateral",
   "rear": "Posterior",
-
-  // Adicionais
   "impossible": "Impossível",
   "variation": "Variação",
   "with": "com",
@@ -103,49 +182,80 @@ const EXERCISE_NAME_TRANSLATIONS: Record<string, string> = {
 };
 
 const translateExerciseName = (name: string): string => {
+  if (!name) return '';
   let translated = name.toLowerCase();
   
-  // Sort keys by length descending to match longest phrases first (e.g. "bench press" before "press")
   const sortedKeys = Object.keys(EXERCISE_NAME_TRANSLATIONS).sort((a, b) => b.length - a.length);
 
   sortedKeys.forEach((eng) => {
     const pt = EXERCISE_NAME_TRANSLATIONS[eng];
-    // Use regex to replace whole words only, case-insensitive
     const regex = new RegExp(`\\b${eng}\\b`, 'gi');
     translated = translated.replace(regex, pt);
   });
   
-  // Capitalize first letter of each word
   return translated.replace(/\b\w/g, char => char.toUpperCase());
 };
 
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
-    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=2000';
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('Falha na resposta da API');
-    
-    const json = await response.json();
-    const exercisesArray = Array.isArray(json.data) ? json.data : (Array.isArray(json) ? json : []);
-    
+    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+    if (!apiKey || apiKey === 'sua_chave_aqui') {
+      console.warn('API Key do RapidAPI não configurada. Configure VITE_RAPIDAPI_KEY no arquivo .env');
+      return [];
+    }
+
     const uniqueExercises = new Map<string, any>();
+    
+    // O plano gratuito (free tier) retorna no máximo 25 itens por página, com total de ~200 itens.
+    // Vamos buscar as 8 páginas simultaneamente para carregar o máximo de opções de pernas, costas, etc.
+    const offsets = [0, 25, 50, 75, 100, 125, 150, 175];
+    
+    const fetchPromises = offsets.map(async (offset) => {
+      try {
+        const url = `https://edb-with-videos-and-images-by-ascendapi.p.rapidapi.com/api/v1/exercises?limit=25&offset=${offset}`;
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'edb-with-videos-and-images-by-ascendapi.p.rapidapi.com'
+          }
+        });
+        if (!response.ok) return [];
+        const json = await response.json();
+        return Array.isArray(json.data) ? json.data : [];
+      } catch (e) {
+        return [];
+      }
+    });
+
+    const results = await Promise.all(fetchPromises);
+    const exercisesArray = results.flat();
 
     exercisesArray.forEach((item: any) => {
-      // 1. Ensure gifUrl exists and is not empty
-      if (!item.gifUrl || item.gifUrl.trim() === '') return;
-      
-      const originalMuscle = item.bodyParts?.[0] || item.target || 'Geral';
+      const id = item.exerciseId || item.id;
+      if (!id) return;
+
+      const originalMuscle = (item.bodyParts && item.bodyParts[0]) || item.bodyPart || item.target || 'Geral';
       const translatedMuscle = BODY_PART_TRANSLATIONS[originalMuscle.toLowerCase()] || originalMuscle;
       const translatedName = translateExerciseName(item.name);
 
-      // 2. Prevent duplicates by ID, preserving variations that might share the same translated name
-      const uid = item.exerciseId || item.id;
-      if (uid && !uniqueExercises.has(uid)) {
-        uniqueExercises.set(uid, {
-          id: uid,
+      const getMediaUrl = (media: string | undefined, type: 'images' | 'videos') => {
+        if (!media) return undefined;
+        if (media.startsWith('http')) return media;
+        return `https://cdn.exercisedb.dev/media/${type}/${media}`;
+      };
+
+      const imageUrl = getMediaUrl(item.imageUrl, 'images') || item.gifUrl;
+      const videoUrl = getMediaUrl(item.videoUrl, 'videos');
+
+      if (!uniqueExercises.has(translatedName)) {
+        uniqueExercises.set(translatedName, {
+          id: id,
           name: translatedName,
           targetMuscle: translatedMuscle,
-          gifUrl: item.gifUrl,
+          imageUrl: imageUrl,
+          videoUrl: videoUrl,
+          gifUrl: item.gifUrl || imageUrl,
           images: [],
           instructions: item.instructions ? item.instructions.map((i: string) => i.replace(/Step:\s*\d+\s*/gi, '')) : []
         });
@@ -155,6 +265,30 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
     return Array.from(uniqueExercises.values());
   } catch (error) {
     console.error('Erro ao buscar exercícios da API:', error);
-    return []; // Return empty list on failure so mocks don't show up
+    return [];
   }
 };
+
+export const fetchExerciseDetail = async (id: string): Promise<any> => {
+  try {
+    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+    if (!apiKey || apiKey === 'sua_chave_aqui') return null;
+
+    const url = `https://edb-with-videos-and-images-by-ascendapi.p.rapidapi.com/api/v1/exercises/${id}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': apiKey,
+        'X-RapidAPI-Host': 'edb-with-videos-and-images-by-ascendapi.p.rapidapi.com'
+      }
+    });
+
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json.data || json;
+  } catch (error) {
+    console.error('Erro ao buscar detalhes do exercício:', error);
+    return null;
+  }
+};
+
