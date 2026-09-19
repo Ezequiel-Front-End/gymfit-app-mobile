@@ -7,7 +7,7 @@ interface NewWorkoutScreenProps {
   exercises?: Exercise[];
   onClose: () => void;
   onAddExercises: () => void;
-  onFinish: () => void;
+  onFinish: (durationSeconds: number) => void;
   onExerciseClick?: (exercise: Exercise) => void;
   onRemoveExercise?: (exercise: Exercise) => void;
 }
@@ -201,7 +201,11 @@ const WorkoutExerciseItem: React.FC<{
   onProgressChange: (completed: number, total: number, volume: number) => void;
 }> = ({ exercise, onImageClick, onRemove, onProgressChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [sets, setSets] = useState([{ id: 1, type: '1', weight: '', reps: '', completed: false }]);
+  const [sets, setSets] = useState([
+    { id: 1, type: '1', weight: '', reps: '', completed: false },
+    { id: 2, type: '2', weight: '', reps: '', completed: false },
+    { id: 3, type: '3', weight: '', reps: '', completed: false }
+  ]);
 
   const toggleSet = (id: number) => {
     setSets(sets.map(s => s.id === id ? { ...s, completed: !s.completed } : s));
@@ -412,7 +416,7 @@ export const NewWorkoutScreen: React.FC<NewWorkoutScreenProps> = ({
         </div>
         
         <button
-          onClick={onFinish}
+          onClick={() => onFinish(seconds)}
           className={`px-5 py-2 rounded-full font-sans font-black text-xs uppercase transition-colors active:scale-95 ${
             isAllCompleted 
               ? 'bg-[var(--color-fit-green)] text-black' 

@@ -121,7 +121,7 @@ const translateExerciseName = (name: string): string => {
 
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
-    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=1300';
+    const url = 'https://oss.exercisedb.dev/api/v1/exercises?limit=2000';
     const response = await fetch(url);
     if (!response.ok) throw new Error('Falha na resposta da API');
     
@@ -138,10 +138,11 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
       const translatedMuscle = BODY_PART_TRANSLATIONS[originalMuscle.toLowerCase()] || originalMuscle;
       const translatedName = translateExerciseName(item.name);
 
-      // 2. Prevent duplicates by using the translated name as a unique key
-      if (!uniqueExercises.has(translatedName)) {
-        uniqueExercises.set(translatedName, {
-          id: item.exerciseId || item.id,
+      // 2. Prevent duplicates by ID, preserving variations that might share the same translated name
+      const uid = item.exerciseId || item.id;
+      if (uid && !uniqueExercises.has(uid)) {
+        uniqueExercises.set(uid, {
+          id: uid,
           name: translatedName,
           targetMuscle: translatedMuscle,
           gifUrl: item.gifUrl,

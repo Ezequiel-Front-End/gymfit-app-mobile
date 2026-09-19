@@ -20,6 +20,7 @@ import { AddExercisesScreen } from './screens/AddExercisesScreen';
 import { ExerciseDetailScreen } from './screens/ExerciseDetailScreen';
 import { BottomNavigation } from './components/BottomNavigation';
 import { LibraryScreen } from './screens/LibraryScreen';
+import { FinishWorkoutScreen } from './screens/FinishWorkoutScreen';
 
 const SCREEN_STEPS: Record<ScreenId, number> = {
   splash: 0,
@@ -35,6 +36,7 @@ const SCREEN_STEPS: Record<ScreenId, number> = {
   exercise_detail: 10,
   perfil: 11,
   biblioteca: 12,
+  finish_workout: 13,
 };
 
 export default function App() {
@@ -47,6 +49,7 @@ export default function App() {
   });
   const [newWorkoutExercises, setNewWorkoutExercises] = useState<import('./api/exercises').Exercise[]>([]);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [workoutDuration, setWorkoutDuration] = useState(0);
 
   const navigateTo = (target: ScreenId, dir?: number) => {
     const targetStep = SCREEN_STEPS[target];
@@ -340,7 +343,32 @@ export default function App() {
                   onRemoveExercise={(exercise) => {
                     setNewWorkoutExercises(prev => prev.filter(e => e.id !== exercise.id));
                   }}
-                  onFinish={() => {
+                  onFinish={(durationSeconds) => {
+                    setWorkoutDuration(durationSeconds);
+                    navigateTo('finish_workout', 1);
+                  }}
+                />
+              </motion.div>
+            )}
+
+            {currentScreen === 'finish_workout' && (
+              <motion.div
+                key="finish_workout"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-0 w-full h-full"
+              >
+                <FinishWorkoutScreen
+                  durationSeconds={workoutDuration}
+                  onBack={() => navigateTo('novo_treino', -1)}
+                  onDiscard={() => {
+                    setNewWorkoutExercises([]);
+                    navigateTo('treinos', -1);
+                  }}
+                  onSave={() => {
                     setNewWorkoutExercises([]);
                     navigateTo('treinos', -1);
                   }}
