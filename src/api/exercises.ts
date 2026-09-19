@@ -198,9 +198,9 @@ const translateExerciseName = (name: string): string => {
 
 export const fetchExercises = async (): Promise<Exercise[]> => {
   try {
-    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY || 'aa5ce73ed5msh16e9d7f6f0b14b7p1ef94ajsn831100125963';
     if (!apiKey || apiKey === 'sua_chave_aqui') {
-      console.warn('API Key do RapidAPI não configurada. Configure VITE_RAPIDAPI_KEY no arquivo .env');
+      console.warn('API Key do RapidAPI não configurada.');
       return [];
     }
 
@@ -288,7 +288,7 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
 
 export const fetchExerciseDetail = async (id: string): Promise<any> => {
   try {
-    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+    const apiKey = import.meta.env.VITE_RAPIDAPI_KEY || 'aa5ce73ed5msh16e9d7f6f0b14b7p1ef94ajsn831100125963';
     if (!apiKey || apiKey === 'sua_chave_aqui') return null;
 
     const url = `https://edb-with-videos-and-images-by-ascendapi.p.rapidapi.com/api/v1/exercises/${id}`;
